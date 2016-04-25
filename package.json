@@ -1,12 +1,14 @@
 {
-    "name": "bae-nodejs",
-    "version": "1.0.0",
-    "author": "bae",
-    "description": "The first bae nodejs app!",
-    "scripts": {
-        "start": "node server.js"
-    },
-    "dependencies": {
-    }
+  "name": "bae-nodejs",
+  "version": "1.0.0",
+  "author": "bae",
+  "description": "The first bae nodejs app!",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "koa": "^1.2.0",
+    "raw-body": "^2.1.6",
+    "sha1": "^1.1.1"
+  }
 }
-
