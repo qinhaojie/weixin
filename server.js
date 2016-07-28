@@ -16,6 +16,10 @@ app.use(function* (next) {
   let body = yield rawBody(this.req)
   this.req.body = body.toString()
   yield next
+  if (!this.body) {
+    this.status = 200
+    this.body = 'hello'
+  }
 })
 app.use(function* (next) {
   console.log(new Date())
@@ -42,7 +46,7 @@ app.use(function* (next) {
         `<xml>
             <ToUserName><![CDATA[${b.FromUserName[0]}]]></ToUserName>
             <FromUserName><![CDATA[${b.ToUserName[0]}]]></FromUserName>
-            <CreateTime>${Date.now()-5000}</CreateTime>
+            <CreateTime>${Date.now() - 5000}</CreateTime>
             <MsgType><![CDATA[text]]></MsgType>
             <Content><![CDATA[${b.Content[0].split('').reverse().join('')} ${Date.now()}]]></Content>
           </xml>`
