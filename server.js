@@ -10,52 +10,84 @@ let config = {
   appsecret: 'b979d6f620b34e18503dc6f98d5515f5',
   token: 'abcd123456'
 }
+let WxApi = require('co-wechat-api')
+let wexinMiddleware = require('co-wechat')(config.token)
+
+let wxapi = new WxApi(config.appId, config.appsecret)
+let co = require('co')
+let menu = {
+  'button': [
+    {
+      'name': '排行榜',
+      'sub_button': [
+        {
+          'name': '最热的',
+          'type': 'click',
+          'key': 'movie_hot'
+        },
+        {
+          'name': '最冷的',
+          'type': 'view',
+          'url': 'http://baidu.com'
+        }
+      ]
+    },
+    {
+      'name': '分类',
+      'sub_button': [
+        {
+          'name': '拍照',
+          'type': 'pic_photo_or_album',
+          'key': 'pic'
+        },
+        {
+          'name': '发送位置',
+          'type': 'location_select',
+          'key': 'location_select'
+        },
+        {
+          name: '微信相册',
+          type: 'pic_weixin',
+          key: 'pic_weixin'
+        },
+        {
+          name: '扫码',
+          type: 'scancode_push',
+          key: 'scancode_push'
+        }
+      ]
+    },
+    {
+      'name': '帮助',
+      'type': 'click',
+      'key': 'help'
+    }]
+}
 
 let app = koa()
-app.use(function* (next) {
-  let body = yield rawBody(this.req)
-  this.req.body = body.toString()
-  yield next
-  if (!this.body) {
-    this.status = 200
-    this.body = 'hello'
+
+function init() {
+  co(function* () {
+    let res = yield* wxapi.removeMenu()
+    console.log(res)
+    let a = yield* wxapi.createMenu(menu)
+    console.log(a)
+    a = yield* wxapi.getMenu()
+    console.log(a)
+  }).catch(e => {
+    console.log(e)
+  })
+}
+// init()
+
+app.use(wexinMiddleware.middleware(function* () {
+  let message = this.weixin
+  console.log(message)
+  this.body = {
+    type: 'text',
+    content: JSON.stringify(message)
   }
-})
-app.use(function* (next) {
-  let signature = this.query.signature
-  let nonce = this.query.nonce
-  let ts = this.query.timestamp
-  let echostr = this.query.echostr
-  let token = config.token
-  let str = [token, ts, nonce].sort().join('')
-  let sha = sha1(str)
-  if (this.method === "GET") {
-    if (sha === signature) {
-      this.body = String(echostr)
-    } else {
-      this.body = 'error'
-    }
-  } else {
-    let b = this.req.body
-    if (this.request.type.indexOf('xml') > 0) {
-      b = yield util.parseXml2JSON(b)
-      console.log(b)
-      b = b.xml
-      let resbody =
-        `<xml>
-            <ToUserName><![CDATA[${b.FromUserName[0]}]]></ToUserName>
-            <FromUserName><![CDATA[${b.ToUserName[0]}]]></FromUserName>
-            <CreateTime>${Date.now() - 5000}</CreateTime>
-            <MsgType><![CDATA[text]]></MsgType>
-            <Content><![CDATA[${b.Content[0].split('').reverse().join('')} ${Date.now()}]]></Content>
-          </xml>`
-      this.status = 200
-      this.type = 'text/xml'
-      this.body = resbody
-      return true
-    }
-  }
-})
+}))
 
 app.listen(18080)
 
