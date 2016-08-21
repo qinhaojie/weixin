@@ -22,7 +22,6 @@ app.use(function* (next) {
   }
 })
 app.use(function* (next) {
-  console.log(new Date())
   let signature = this.query.signature
   let nonce = this.query.nonce
   let ts = this.query.timestamp
