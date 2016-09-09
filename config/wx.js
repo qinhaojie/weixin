@@ -1,7 +1,7 @@
 exports.menu = {
   'button': [
     {
-      'name': '排行榜',
+      'name': '分析',
       'sub_button': [
         {
           'name': '最热的',

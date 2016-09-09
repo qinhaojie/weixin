@@ -1,9 +1,17 @@
-module.exports = function (router) {
+let weixin = require('././../app/controller/weixin')
 
+module.exports = function (router) {
   router.get('/', function * () {
-    this.body = 'asdf'
+    let db = global.db
+    let collection = db.collection('a')
+    if (Object.keys(this.query).length > 0) {
+      yield collection.insertOne(this.query)
+    }
+    let res = yield collection.find().toArray()
+    this.body = JSON.stringify(res)
   })
 
-  router.get('/wx', require('././../app/controller/weixin')())
-  router.post('/wx', require('././../app/controller/weixin')())
+  router.get('/wx', weixin.reply())
+  router.post('/wx', weixin.reply())
+  router.get('/wx/menu', weixin.auth, weixin.updateMenu())
 }
