@@ -11,6 +11,8 @@
     "co-wechat": "0.0.4",
     "co-wechat-api": "^2.4.2",
     "koa": "^1.2.0",
+    "koa-router": "^5.4.0",
+    "moment": "^2.14.1",
     "raw-body": "^2.1.6",
     "sha1": "^1.1.1",
     "xml2js": "^0.4.17"
