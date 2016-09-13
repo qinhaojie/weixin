@@ -1,17 +1,17 @@
 exports.menu = {
   'button': [
     {
-      'name': '分析',
+      'name': '体育',
       'sub_button': [
         {
-          'name': '最热的',
+          'name': '足球',
           'type': 'click',
-          'key': 'movie_hot'
+          'key': 'football'
         },
         {
-          'name': '最冷的',
-          'type': 'view',
-          'url': 'http://baidu.com'
+          'name': '篮球',
+          'type': 'click',
+          'key': 'basketball'
         }
       ]
     },
