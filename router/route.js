@@ -1,5 +1,5 @@
-let weixin = require('././../app/controller/weixin')
-
+let weixin = require('./../app/controller/weixin')
+let spider = require('./../app/controller/spider')
 module.exports = function (router) {
   router.get('/', function * () {
     let db = global.db
@@ -15,4 +15,9 @@ module.exports = function (router) {
   router.post('/wx', weixin.reply())
   router.use('/wx/menu', weixin.auth)
   router.get('/wx/menu', weixin.updateMenu())
+
+  router.get('/football', function * () {
+    let info = yield spider.getFootballMatch()
+    this.body = JSON.stringify(info)
+  })
 }

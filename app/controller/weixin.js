@@ -24,11 +24,7 @@ exports.updateMenu = function () {
   }
 }
 
-exports.auth = function* (next) {
-  if (this.query.a !== '1') {
-    this.throw(404, 'auth')
-    return
-  }
+exports.auth = function * (next) {
   yield * next
 }
 

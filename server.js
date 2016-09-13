@@ -12,6 +12,13 @@ let router = require('./router')
 let app = koa()
 
 app.use(function * (next) {
+  let s = new Date()
+  yield next
+  let e = new Date()
+  console.log(e - s)
+})
+
+app.use(function * (next) {
   try {
     yield next
   } catch (err) {
