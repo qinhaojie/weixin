@@ -13,5 +13,6 @@ module.exports = function (router) {
 
   router.get('/wx', weixin.reply())
   router.post('/wx', weixin.reply())
-  router.get('/wx/menu', weixin.auth, weixin.updateMenu())
+  router.use('/wx/menu', weixin.auth)
+  router.get('/wx/menu', weixin.updateMenu())
 }
