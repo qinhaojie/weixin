@@ -1,12 +1,18 @@
 let request = require('request')
 let cheerio = require('cheerio')
 let moment = require('moment')
-exports.getFootballMatch = function * (date) {
+
+const translate = {
+  football: '足球',
+  basketball: '篮球'
+}
+
+function * getSportMatch (type) {
   let url = 'http://www.zhibo8.cc/'
   let data = yield http({url})
   let $ = cheerio.load(data.body)
   let ret = []
-  $('.content').eq(0).find('li[label*="足球"]').each((i, li) => {
+  $('.content').eq(0).find('li[label*="' + translate[type] + '"]').each((i, li) => {
     let info = $(li).text().split(' ')
     let j = -1
     let r = []
@@ -26,6 +32,14 @@ exports.getFootballMatch = function * (date) {
     })
   })
   return ret
+}
+exports.getSportMatch = getSportMatch
+exports.getFootballMatch = function * (date) {
+  return yield getSportMatch('football')
+}
+
+exports.getBasketballMatch = function * (date) {
+  return yield getSportMatch('basketball')
 }
 
 function http (options) {
