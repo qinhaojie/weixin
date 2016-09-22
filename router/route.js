@@ -1,3 +1,4 @@
+'use strict'
 let weixin = require('./../app/controller/weixin')
 let spider = require('./../app/controller/spider')
 module.exports = function (router) {

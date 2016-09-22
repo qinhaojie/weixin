@@ -1,3 +1,4 @@
+'use strict'
 let Router = require('koa-router')
 let route = require('./route')
 module.exports = function (app) {

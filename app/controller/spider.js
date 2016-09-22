@@ -1,3 +1,4 @@
+'use strict'
 let request = require('request')
 let cheerio = require('cheerio')
 let moment = require('moment')

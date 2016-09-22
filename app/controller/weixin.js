@@ -1,3 +1,4 @@
+'use strict'
 let wxConfig = require('../../config/wx')
 let wexinMiddleware = require('co-wechat')(wxConfig.config.token)
 let WxApi = require('co-wechat-api')
