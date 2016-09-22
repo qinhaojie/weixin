@@ -2,12 +2,12 @@
 let koa = require('koa')
 
 // let co = require('co')
-let MongoClient = require('mongodb').MongoClient
-let url = 'mongodb://localhost:27017/qin'
-MongoClient.connect(url, (e, db) => {
-  if (e) throw e
-  global.db = db
-})
+// let MongoClient = require('mongodb').MongoClient
+// let url = 'mongodb://localhost:27017/qin'
+// MongoClient.connect(url, (e, db) => {
+//   if (e) throw e
+//   global.db = db
+// })
 let router = require('./router')
 let app = koa()
 
