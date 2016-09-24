@@ -15,7 +15,8 @@ app.use(function * (next) {
   let s = new Date()
   yield next
   let e = new Date()
-  console.log(e - s)
+  console.log(e, e - s)
+  console.log(this.body)
 })
 
 app.use(function * (next) {
